@@ -10,7 +10,7 @@ def push_prod_data(data):
         # db select, insert, update, delete 작업 객체
         cursor = conn.cursor()
         # 실행할 select 문 구성
-        sql = f"SELECT * FROM new_product where pcode = '{data['pcode']}' "
+        sql = f"SELECT * FROM danawa_product where parent_pcode = '{data['pcode']}' "
         # cursor 객체를 이용해서 수행한다.
         cursor.execute(sql)
         resultList = cursor.fetchall()
@@ -29,7 +29,7 @@ def modify_product(data):
     try:
         conn = mysql.connector.connect(**config)
         cursor = conn.cursor()
-        sql = f"UPDATE new_product SET pcode='{data['pcode']}', prod_name='{data['prod_name']}', thumb='{data['thumb']}', `desc`='{data['desc']}', href='{data['href']}'  where pcode='{data['pcode']}'"
+        sql = f"UPDATE danawa_product SET parent_pcode='{data['pcode']}', prod_name='{data['prod_name']}', thumb='{data['thumb']}', `desc`='{data['desc']}', href='{data['href']}'  where parent_pcode='{data['pcode']}'"
         cursor.execute(sql)
         conn.commit()
         conn.close()
@@ -43,7 +43,7 @@ def add_product(data):
     try:
         conn = mysql.connector.connect(**config)
         cursor = conn.cursor()
-        sql = f"INSERT INTO new_product (`pcode`, `prod_name`, `thumb`, `desc`, `href`) \
+        sql = f"INSERT INTO danawa_product (`parent_pcode`, `prod_name`, `thumb`, `desc`, `href`) \
             values('{data['pcode']}', '{data['prod_name']}', '{data['thumb']}', '{data['desc']}', '{data['href']}');"
         cursor.execute(sql)
         conn.commit()
@@ -61,7 +61,7 @@ def push_prod_data2(data):
         # db select, insert, update, delete 작업 객체
         cursor = conn.cursor()
         # 실행할 select 문 구성
-        sql = f"SELECT * FROM new_product_detail where pcode = '{data['pcode']}' and parent_pcode = '{data['parent_pcode']}' "
+        sql = f"SELECT * FROM danawa_product_detail where pcode = '{data['pcode']}' and parent_pcode = '{data['parent_pcode']}' "
         # cursor 객체를 이용해서 수행한다.
         cursor.execute(sql)
         resultList = cursor.fetchall()
@@ -79,7 +79,7 @@ def modify_product2(data):
     try:
         conn = mysql.connector.connect(**config)
         cursor = conn.cursor()
-        sql = f"UPDATE new_product_detail SET parent_pcode='{data['parent_pcode']}', pcode='{data['pcode']}', price='{data['price']}', href='{data['href']}', ext1='{data['ext1']}', ext2='{data['ext2']}'  where pcode='{data['pcode']}' and parent_pcode = '{data['parent_pcode']}'"
+        sql = f"UPDATE danawa_product_detail SET parent_pcode='{data['parent_pcode']}', pcode='{data['pcode']}', price='{data['price']}', href='{data['href']}', ext1='{data['ext1']}', ext2='{data['ext2']}'  where pcode='{data['pcode']}' and parent_pcode = '{data['parent_pcode']}'"
         cursor.execute(sql)
         conn.commit()
         conn.close()
@@ -93,7 +93,7 @@ def add_product2(data):
     try:
         conn = mysql.connector.connect(**config)
         cursor = conn.cursor()
-        sql = f"INSERT INTO new_product_detail(`parent_pcode`, `pcode`, `price`, `href`, `ext1`, `ext2`) \
+        sql = f"INSERT INTO danawa_product_detail(`parent_pcode`, `pcode`, `price`, `href`, `ext1`, `ext2`) \
             values('{data['parent_pcode']}', '{data['pcode']}', '{data['price']}', '{data['href']}', '{data['ext1']}', '{data['ext2']}');"
         cursor.execute(sql)
         conn.commit()
